@@ -1,7 +1,7 @@
 # sj.h
 A tiny little JSON parsing library
 
-- ~150 lines of C99
+- ~150 lines of C11
 - Zero-allocations with minimal state
 - Error messages with `line:column:` location
 - No number parsing: `strtod`, `atoi`? Handle them how you want
