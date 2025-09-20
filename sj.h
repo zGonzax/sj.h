@@ -15,7 +15,7 @@ typedef struct {
 typedef struct {
     int type;
     char *start, *end;
-    int depth;
+    union { int depth; char *error; };
 } sj_Value;
 
 enum { SJ_ERROR, SJ_END, SJ_ARRAY, SJ_OBJECT, SJ_NUMBER, SJ_STRING, SJ_BOOL, SJ_NULL };
@@ -24,7 +24,7 @@ sj_Reader sj_reader(char *data, size_t len);
 sj_Value sj_read(sj_Reader *r);
 bool sj_iter_array(sj_Reader *r, sj_Value arr, sj_Value *val);
 bool sj_iter_object(sj_Reader *r, sj_Value obj, sj_Value *key, sj_Value *val);
-void sj_location(sj_Reader *r, int *line, int *col);
+void sj_location(sj_Reader *r, char *at, int *line, int *col);
 
 #endif // #ifndef SJ_H
 
@@ -36,8 +36,8 @@ sj_Reader sj_reader(char *data, size_t len) {
 }
 
 
-static sj_Value sj__error(char *msg) {
-    return (sj_Value){ .type = SJ_ERROR, .start = msg, .end = msg + strlen(msg) };
+static sj_Value sj__error(char *at, char *msg) {
+    return (sj_Value){ .type = SJ_ERROR, .start = at, .end = at, .error = msg };
 }
 
 
@@ -60,7 +60,7 @@ static bool sj__is_string(char *cur, char *end, char *expect) {
 sj_Value sj_read(sj_Reader *r) {
     sj_Value res;
 top:
-    if (r->cur == r->end) { return sj__error("unexpected eof"); }
+    if (r->cur == r->end) { return sj__error(r->cur, "unexpected eof"); }
     res.start = r->cur;
 
     switch (*r->cur) {
@@ -79,7 +79,7 @@ top:
         res.type = SJ_STRING;
         res.start = ++r->cur;
         for (;;) {
-            if ( r->cur == r->end) { return sj__error("unclosed string"); }
+            if ( r->cur == r->end) { return sj__error(res.start, "unclosed string"); }
             if (*r->cur ==    '"') { break; }
             if (*r->cur ==   '\\') { r->cur++; }
             if ( r->cur != r->end) { r->cur++; }
@@ -96,7 +96,7 @@ top:
     case '}': case ']':
         res.type = SJ_END;
         if (--r->depth < 0) {
-            return sj__error(*r->cur == '}' ? "stray '}'" : "stray ']'");
+            return sj__error(r->cur, *r->cur == '}' ? "stray '}'" : "stray ']'");
         }
         r->cur++;
         break;
@@ -109,7 +109,7 @@ top:
         // fallthrough
 
     default:
-        return sj__error("unknown token");
+        return sj__error(r->cur, "unknown token");
     }
     res.end = r->cur;
     return res;
@@ -138,15 +138,15 @@ bool sj_iter_object(sj_Reader *r, sj_Value obj, sj_Value *key, sj_Value *val) {
     *key = sj_read(r);
     if (key->type == SJ_ERROR || key->type == SJ_END) { return false; }
     *val = sj_read(r);
-    if (val->type == SJ_END)   { *val = sj__error("unexpected object end"); }
+    if (val->type == SJ_END)   { *val = sj__error(val->start, "unexpected object end"); }
     if (val->type == SJ_ERROR) { return false; }
     return true;
 }
 
 
-void sj_location(sj_Reader *r, int *line, int *col) {
+void sj_location(sj_Reader *r, char *at, int *line, int *col) {
     int ln = 1, cl = 1;
-    for (char *p = r->data; p != r->cur; p++) {
+    for (char *p = r->data; p != at; p++) {
         if (*p == '\n') { ln++; cl = 0; }
         cl++;
     }

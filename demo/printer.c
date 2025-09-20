@@ -27,8 +27,8 @@ void print_value(sj_Reader *r, sj_Value val, int depth, bool minify) {
 
     switch (val.type) {
     case SJ_ERROR:
-        sj_location(r, &line, &col);
-        fprintf(stderr, "error: %d:%d: %s\n", line, col, val.start);
+        sj_location(r, val.start, &line, &col);
+        fprintf(stderr, "error: %d:%d: %s\n", line, col, val.error);
         exit(EXIT_FAILURE);
 
     case SJ_ARRAY:
