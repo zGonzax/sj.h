@@ -1,4 +1,4 @@
-// sj.h - v0.1 - rxi 2025
+// sj.h - v0.2 - rxi 2025
 // public domain - no warranty implied, use at your own risk
 
 #ifndef SJ_H
