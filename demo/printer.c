@@ -26,9 +26,10 @@ void print_value(sj_Reader *r, sj_Value val, int depth, bool minify) {
     int count = 0;
 
     switch (val.type) {
+error:
     case SJ_ERROR:
-        sj_location(r, val.start, &line, &col);
-        fprintf(stderr, "error: %d:%d: %s\n", line, col, val.error);
+        sj_location(r, &line, &col);
+        fprintf(stderr, "\nerror: %d:%d: %s\n", line, col, r->error);
         exit(EXIT_FAILURE);
 
     case SJ_ARRAY:
@@ -39,6 +40,7 @@ void print_value(sj_Reader *r, sj_Value val, int depth, bool minify) {
             print_indent(depth + 1, minify);
             print_value(r, v, depth + 1, minify);
         }
+        if (r->error) { goto error; }
         if (count > 0) {
             print_newline(minify);
             print_indent(depth, minify);
@@ -56,6 +58,7 @@ void print_value(sj_Reader *r, sj_Value val, int depth, bool minify) {
             printf(": ");
             print_value(r, v, depth + 1, minify);
         }
+        if (r->error) { goto error; }
         if (count > 0) {
             print_newline(minify);
             print_indent(depth, minify);
