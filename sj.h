@@ -1,4 +1,4 @@
-// sj.h - v0.3 - rxi 2025
+// sj.h - v0.4 - rxi 2025
 // public domain - no warranty implied, use at your own risk
 
 #ifndef SJ_H
@@ -61,7 +61,7 @@ top:
     res.start = r->cur;
 
     switch (*r->cur) {
-    case ' ': case '\n': case '\r': case '\t': case '\v':
+    case ' ': case '\n': case '\r': case '\t':
     case ':': case ',':
         r->cur++;
         goto top;
